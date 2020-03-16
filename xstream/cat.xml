@@ -1,0 +1,14 @@
+<com.example.demo.entity.Cat>
+  <name>胖子</name>
+  <age>1</age>
+  <balls>
+    <com.example.demo.entity.Ball>
+      <color>red</color>
+      <price>19.0</price>
+    </com.example.demo.entity.Ball>
+    <com.example.demo.entity.Ball>
+      <color>yellow</color>
+      <price>30.0</price>
+    </com.example.demo.entity.Ball>
+  </balls>
+</com.example.demo.entity.Cat>

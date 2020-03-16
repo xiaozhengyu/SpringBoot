@@ -1,0 +1,12 @@
+<cat>
+  <catName>胖子</catName>
+  <catAge>1</catAge>
+  <ball>
+    <ballColor>red</ballColor>
+    <ballPrice>19.0</ballPrice>
+  </ball>
+  <ball>
+    <ballColor>yellow</ballColor>
+    <ballPrice>30.0</ballPrice>
+  </ball>
+</cat>
