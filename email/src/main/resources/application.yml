@@ -1,0 +1,12 @@
+server:
+  port: 8089
+
+spring:
+  mail:
+    # 邮件服务主机
+    host: xxxx
+    port: xxxx
+    # 发送邮件的邮箱地址
+    username: xxxx
+    # 邮箱授权码
+    password: xxxx
