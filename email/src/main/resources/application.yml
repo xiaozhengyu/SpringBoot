@@ -4,9 +4,9 @@ server:
 spring:
   mail:
     # 邮件服务主机
-    host: xxxx
-    port: xxxx
+    host: 10.0.3.14
+    port: 25
     # 发送邮件的邮箱地址
-    username: xxxx
+    username: maiis_alert@iport.com.cn
     # 邮箱授权码
-    password: xxxx
+    password: 123xmn123,
