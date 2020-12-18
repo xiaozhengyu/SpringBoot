@@ -2,10 +2,17 @@ server:
   port: 1234
 spring:
   datasource:
-    url: jdbc:mysql://127.0.0.1:3306/activiti?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=UTF-8&useSSL=false
+    url: jdbc:mysql://127.0.0.1:3306/activiti?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=UTF-8&useSSL=false&&nullCatalogMeansCurrent=true
     type: com.zaxxer.hikari.HikariDataSource
     driver-class-name: com.mysql.cj.jdbc.Driver
     hikari:
       username: root
       password: 123456
       connection-test-query: SELECT 1
+  jpa:
+    # 开启控制台SQL打印
+    show-sql: true
+    properties:
+      hibernate:
+        # 开启SQL格式化
+        format_sql: true
