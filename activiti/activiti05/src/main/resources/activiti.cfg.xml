@@ -16,7 +16,7 @@
         <property name="driverClassName" value="com.mysql.cj.jdbc.Driver"/>
         <property name="url" value="jdbc:mysql://127.0.0.1:3306/activiti?serverTimezone=Asia/Shanghai"/>
         <property name="username" value="root"/>
-        <property name="password" value="123ABC,"/>
+        <property name="password" value="123456"/>
 
         <!--连接池配置-->
         <property name="maxActive" value="3"/>

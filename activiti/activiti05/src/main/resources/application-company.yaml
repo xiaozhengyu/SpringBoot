@@ -16,3 +16,6 @@ spring:
       hibernate:
         # 开启SQL格式化
         format_sql: true
+logging:
+  level:
+    root: info
