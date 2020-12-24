@@ -2,17 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="31141842-6ec9-4cd7-a80a-ed0433195561" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.mvn/wrapper/MavenWrapperDownloader.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.mvn/wrapper/maven-wrapper.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.mvn/wrapper/maven-wrapper.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/mvnw" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/mvnw.cmd" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/xzy/email/EmailApplication.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/xzy/email/EmailController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/com/xzy/email/EmailApplicationTests.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -43,6 +33,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="project.structure.last.edited" value="Modules" />
@@ -77,6 +68,7 @@
       <workItem from="1608082655878" duration="881000" />
       <workItem from="1608083576642" duration="7780000" />
       <workItem from="1608104655285" duration="2000" />
+      <workItem from="1608797287014" duration="615000" />
     </task>
     <servers />
   </component>
@@ -136,10 +128,10 @@
       <screen x="1920" y="0" width="1080" height="1890" />
     </state>
     <state width="1037" height="899" key="GridCell.Tab.2.right/0.0.1920.1050/1920.0.1080.1890@1920.0.1080.1890" timestamp="1608093044422" />
-    <state x="1940" y="519" key="SettingsEditor" timestamp="1608084636601">
+    <state x="1940" y="519" key="SettingsEditor" timestamp="1608797670045">
       <screen x="1920" y="0" width="1080" height="1890" />
     </state>
-    <state x="1940" y="519" key="SettingsEditor/0.0.1920.1050/1920.0.1080.1890@1920.0.1080.1890" timestamp="1608084636601" />
+    <state x="1940" y="519" key="SettingsEditor/0.0.1920.1050/1920.0.1080.1890@1920.0.1080.1890" timestamp="1608797670045" />
     <state width="1057" height="971" key="documentation.popup.size" timestamp="1608088596790">
       <screen x="1920" y="0" width="1080" height="1890" />
     </state>
