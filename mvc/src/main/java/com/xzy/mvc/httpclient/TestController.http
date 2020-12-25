@@ -1,0 +1,16 @@
+### 测试 /test/get_test1
+GET http://{{url}}/test/get_test1
+
+### 测试 /test/get_test2
+GET http://{{url}}/test/get_test2?paramStr=hello
+
+### 测试 /test/post_test
+POST http://{{url}}/test/post_test
+Content-Type: application/json
+
+{
+  "paramInteger": 1,
+  "paramString": "str",
+  "paramDouble": 1.0
+}
+
