@@ -2,6 +2,8 @@ package com.xzy.activiti;
 
 import org.activiti.engine.*;
 import org.activiti.engine.repository.Deployment;
+import org.activiti.engine.repository.ProcessDefinition;
+import org.activiti.engine.repository.ProcessDefinitionQuery;
 import org.activiti.engine.runtime.ProcessInstance;
 import org.activiti.engine.task.Task;
 import org.activiti.engine.task.TaskQuery;
@@ -133,6 +135,7 @@ class ActivitiApplicationTests {
      */
     @Test
     void testCompleteTask() {
+        // 1.获取流程引擎
         ProcessEngineConfiguration processEngineConfiguration = ProcessEngineConfiguration.createProcessEngineConfigurationFromResource("activiti.cfg.xml");
         ProcessEngine processEngine = processEngineConfiguration.buildProcessEngine();
 
@@ -151,5 +154,47 @@ class ActivitiApplicationTests {
             System.out.println("任务ID：" + task.getId() + " 任务名称：" + task.getName() + " 任务负责人：" + task.getAssignee());
             taskService.complete(task.getId());
         }
+    }
+
+    /**
+     * 流程定义查询
+     */
+    @Test
+    void testProcessDefinitionQuery() {
+        // 1.获取流程引擎
+        ProcessEngineConfiguration processEngineConfiguration = ProcessEngineConfiguration.createProcessEngineConfigurationFromResource("activiti.cfg.xml");
+        ProcessEngine processEngine = processEngineConfiguration.buildProcessEngine();
+
+        // 2.获取RepositoryService：流程管理类
+        RepositoryService repositoryService = processEngine.getRepositoryService();
+
+        // 3.获取ProcessDefinitionQuery：流程定义查询对象
+        ProcessDefinitionQuery processDefinitionQuery = repositoryService.createProcessDefinitionQuery();
+
+        // 4.流程定义查询：支持多条件、排序等个性化定制
+        List<ProcessDefinition> myEvectionList = processDefinitionQuery
+                .processDefinitionKey("myEvection")
+                .orderByProcessDefinitionVersion().desc().list();
+
+        // 5.输出相关信息
+        for (ProcessDefinition processDefinition : myEvectionList) {
+            System.out.println(myEvectionList);
+        }
+    }
+
+    /**
+     * 流程定义删除
+     */
+    @Test
+    void testProcessDefinitionDelete() {
+        // 1.获取流程引擎
+        ProcessEngineConfiguration processEngineConfiguration = ProcessEngineConfiguration.createProcessEngineConfigurationFromResource("activiti.cfg.xml");
+        ProcessEngine processEngine = processEngineConfiguration.buildProcessEngine();
+
+        // 2.获取RepositoryService：流程管理类
+        RepositoryService repositoryService = processEngine.getRepositoryService();
+
+        // 3.获取ProcessDefinitionQuery：流程定义查询对象
+        repositoryService.deleteDeployment("deploymentId");
     }
 }

@@ -167,7 +167,10 @@ delete from ACT_RU_TASK where ID_ = ? and REV_ = ?
 
 ## 七、activiti 07
 
-将多个流程的定义文件打成zip包，进行一次性部署。
+1. 以zip包的形式，一次性部署多个流程。
+2. 流程定义查询
+3. 流程定义删除
+4. 
 
 ---
 
