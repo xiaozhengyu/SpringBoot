@@ -75,11 +75,29 @@ processEngine.getXXXService();
 
 1. 定义流程：按照BPMN的规范，借助相关工具，用**流程符号**将整个流程描述出来（bpmn文件、png文件）。
 2. 部署流程：把描述好的流程，加载到数据库中（生成相关表的数据）。
-3. 启动流程：使用代码操作相关数据库表的内容。
+    - RepositoryService：activiti资源管理类
+3. 启动流程（创建流程实例）：使用代码操作相关数据库表的内容。
+    - RuntimeService：流程运行管理类
 
+> **定义流程：**
+>
+> ```mermaid
+> graph TB
+> start(开始)
+> endly(结束)
+> task1[创建出差申请]
+> task2[经理审批]
+> task3[总经理审批]
+> task4[财务审批]
+> start-->task1-->task2-->task3-->task4-->endly
+> 
+> ```
+>
+> 
+>
 > **部署流程：**
 >
-> （每进行一次部署，对以下数据库表进行INSERT操作）
+> 每进行一次部署，对以下数据库表进行INSERT操作：
 >
 > | 表名              | 操作                                    |
 > | :---------------- | :-------------------------------------- |
@@ -87,19 +105,73 @@ processEngine.getXXXService();
 > | ACT_RE_PROCDEF    | 可插入多条记录，即流程定义信息          |
 > | ACT_GE_BYTEARRAY  | 可插入多条记录，即bpmn文件、png文件信息 |
 >
-> （E-R图）
+> 每进行一次部署，只生成一条流程部署信息，可生成多条流程定义信息。（E-R图）
 >
 > ![image-20201225115124888](markdown/Readme.assets/image-20201225115124888.png)
 >
-> 每进行一次部署，只生成一条流程部署信息，可生成多条流程定义信息。
+> **启动流程（创建流程实例）：**
+>
+> 没启动一次流程，对下列表进行操作：
+>
+> | 表明                | 操作A |
+> | ------------------- | ----- |
+> | ACT_GE_PROPERTY     |       |
+> | ACT_HI_ACTINST      |       |
+> | ACT_HI_IDENTITYLINK |       |
+> | ACT_HI_PROCINST     |       |
+> | ACT_HI_TASKINST     |       |
+> | ACT_RU_EXECUTION    |       |
+> | ACT_RU_IDENTITYLINK |       |
+> | ACT_RU_TASK         |       |
+>
+> 
 
+## 六、activiti 06
 
+1. 用户任务查询
+    - TaskService：流程任务管理类
+2. 用户任务完成
 
+任务完成处理流程（当前任务为”创建出差申请“）：
 
+```sql
+update ACT_GE_PROPERTY SET REV_ = ?, VALUE_ = ? where NAME_ = ? and REV_ = ?
+
+// 下一任务开头（设置“任务开始时间”）
+insert into ACT_HI_TASKINST ( ID_, PROC_DEF_ID_, PROC_INST_ID_, EXECUTION_ID_, NAME_, PARENT_TASK_ID_, DESCRIPTION_, OWNER_, ASSIGNEE_, START_TIME_, CLAIM_TIME_, END_TIME_, DURATION_, DELETE_REASON_, TASK_DEF_KEY_, FORM_KEY_, PRIORITY_, DUE_DATE_, CATEGORY_, TENANT_ID_ ) values ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? )
+
+// 下一任务开头（设置“任务开始时间”）
+insert into ACT_HI_ACTINST ( ID_, PROC_DEF_ID_, PROC_INST_ID_, EXECUTION_ID_, ACT_ID_, TASK_ID_, CALL_PROC_INST_ID_, ACT_NAME_, ACT_TYPE_, ASSIGNEE_, START_TIME_, END_TIME_, DURATION_, DELETE_REASON_, TENANT_ID_ ) values ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? ) 
+
+// 下一任务开头
+insert into ACT_HI_IDENTITYLINK (ID_, TYPE_, USER_ID_, GROUP_ID_, TASK_ID_, PROC_INST_ID_) values (?, ?, ?, ?, ?, ?) 
+
+// 下一任务开头
+insert into ACT_RU_TASK (ID_, REV_, NAME_, PARENT_TASK_ID_, DESCRIPTION_, PRIORITY_, CREATE_TIME_, OWNER_, ASSIGNEE_, DELEGATION_, EXECUTION_ID_, PROC_INST_ID_, PROC_DEF_ID_, TASK_DEF_KEY_, DUE_DATE_, CATEGORY_, SUSPENSION_STATE_, TENANT_ID_, FORM_KEY_, CLAIM_TIME_) values (?, 1, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? ) 
+
+// 下一任务开头
+insert into ACT_RU_IDENTITYLINK (ID_, REV_, TYPE_, USER_ID_, GROUP_ID_, TASK_ID_, PROC_INST_ID_, PROC_DEF_ID_) values (?, 1, ?, ?, ?, ?, ?, ?)
+
+// 当前任务结尾（设置“完成时间”）
+update ACT_HI_ACTINST set EXECUTION_ID_ = ?, ASSIGNEE_ = ?, END_TIME_ = ?, DURATION_ = ?, DELETE_REASON_ = ? where ID_ = ? 
+
+// 当前任务结尾（设置“完成时间”）
+update ACT_HI_TASKINST set PROC_DEF_ID_ = ?, EXECUTION_ID_ = ?, NAME_ = ?, PARENT_TASK_ID_ = ?, DESCRIPTION_ = ?, OWNER_ = ?, ASSIGNEE_ = ?, CLAIM_TIME_ = ?, END_TIME_ = ?, DURATION_ = ?, DELETE_REASON_ = ?, TASK_DEF_KEY_ = ?, FORM_KEY_ = ?, PRIORITY_ = ?, DUE_DATE_ = ?, CATEGORY_ = ? where ID_ = ? 
+
+// 当前任务结尾，下一任务开头。
+update ACT_RU_EXECUTION set REV_ = ?, BUSINESS_KEY_ = ?, PROC_DEF_ID_ = ?, ACT_ID_ = ?, IS_ACTIVE_ = ?, IS_CONCURRENT_ = ?, IS_SCOPE_ = ?, IS_EVENT_SCOPE_ = ?, IS_MI_ROOT_ = ?, PARENT_ID_ = ?, SUPER_EXEC_ = ?, ROOT_PROC_INST_ID_ = ?, SUSPENSION_STATE_ = ?, NAME_ = ?, IS_COUNT_ENABLED_ = ?, EVT_SUBSCR_COUNT_ = ?, TASK_COUNT_ = ?, JOB_COUNT_ = ?, TIMER_JOB_COUNT_ = ?, SUSP_JOB_COUNT_ = ?, DEADLETTER_JOB_COUNT_ = ?, VAR_COUNT_ = ?, ID_LINK_COUNT_ = ? where ID_ = ? and REV_ = ? 
+
+// 当前任务结尾（移除）
+delete from ACT_RU_TASK where ID_ = ? and REV_ = ? 
+```
+
+## 七、activiti 07
+
+将多个流程的定义文件打成zip包，进行一次性部署。
 
 ---
 
-## Activiti 相关信息
+## Activiti 相关信息  
 
 ### 数据库表
 
