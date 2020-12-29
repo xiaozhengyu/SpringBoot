@@ -2,7 +2,9 @@
 
 ---
 
-## 一、activiti 01
+## 一、基础部分
+
+### 1.1 activiti 01
 
 - xml配置
 - 默认创建方式 StandaloneProcessEngineConfiguration
@@ -18,14 +20,14 @@
 >
 > <font color = red>注意：文件存储路径、文件名、bean 的 id 都是固定的。</font>
 
-## 二、activiti 02
+### 1.2 activiti 02
 
 - xml配置
 - 默认创建方式 StandaloneProcessEngineConfiguration
 - ProcessEngines.getDefaultProcessEngine()
 - 数据库连接池 dbcp
 
-## 三、activiti 03
+### 1.3 activiti 03
 
 - xml配置
 - 默认创建方式 StandaloneProcessEngineConfiguration
@@ -49,7 +51,7 @@
 > ProcessEngineConfiguration.createProcessEngineConfigurationFromResource("配置文件名","bean的id");
 > ```
 
-## 四、activiti 04
+### 1.4 activiti 04
 
 - xml配置
 - 默认创建方式 StandaloneProcessEngineConfiguration
@@ -69,7 +71,7 @@
 processEngine.getXXXService();
 ```
 
-## 五、activiti 05
+### 1.5 activiti 05
 
 创建并启动一个activiti工作流（<u>出差申请</u>），主要包含以下几个步骤：
 
@@ -126,7 +128,7 @@ processEngine.getXXXService();
 >
 > 
 
-## 六、activiti 06
+### 1.6 activiti 06
 
 1. 用户任务查询
     - TaskService：流程任务管理类
@@ -165,12 +167,36 @@ update ACT_RU_EXECUTION set REV_ = ?, BUSINESS_KEY_ = ?, PROC_DEF_ID_ = ?, ACT_I
 delete from ACT_RU_TASK where ID_ = ? and REV_ = ? 
 ```
 
-## 七、activiti 07
+### 1.7 activiti 07
 
 1. 以zip包的形式，一次性部署多个流程。
+
 2. 流程定义查询
+
 3. 流程定义删除
-4. 
+
+    与流程定义的部署操作一样，流程定义的删除操作同样需要操作以下3张表：
+
+    | 表名              | 操作                      |
+    | :---------------- | :------------------------ |
+    | ACT_RE_DEPLOYMENT | 删除流程部署信息          |
+    | ACT_RE_PROCDEF    | 删除流程定义信息          |
+    | ACT_GE_BYTEARRAY  | 删除bpmn文件、png文件信息 |
+
+4. 资源文件下载
+
+5. 历史信息查看
+
+
+---
+
+## 二、高级部分
+
+### 2.1 activiti 08
+
+
+
+
 
 ---
 
