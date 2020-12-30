@@ -206,6 +206,18 @@ delete from ACT_RU_TASK where ID_ = ? and REV_ = ?
 
 3. 流程实例挂起、激活
 
+### 2.2 activiti 09 
+
+设置任务负责人的3种方式：
+
+- 固定分配：直接在bpmn文件中写死任务负责人，之前的工程使用的都是这种方式。
+- 表达式分配
+    - UEL-value √
+    - UEL-method
+    - UEL-value 与 UEL-method 结合
+    - 其他
+- 监听器分配 √
+
 ---
 
 ## Activiti 相关信息  

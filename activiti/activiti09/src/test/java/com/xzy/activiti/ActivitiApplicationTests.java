@@ -213,7 +213,7 @@ class ActivitiApplicationTests {
      * 激化所有流程实例/激化整个流程
      */
     @Test
-    void testActivateAllProcessInstance()  {
+    void testActivateAllProcessInstance() {
         // 1.获取ProcessEngine
         ProcessEngineConfiguration processEngineConfiguration = ProcessEngineConfiguration.createProcessEngineConfigurationFromResource("activiti.cfg.xml");
         ProcessEngine processEngine = processEngineConfiguration.buildProcessEngine();
