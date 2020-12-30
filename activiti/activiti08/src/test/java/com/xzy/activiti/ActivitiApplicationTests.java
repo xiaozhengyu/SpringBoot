@@ -162,118 +162,124 @@ class ActivitiApplicationTests {
     }
 
     /**
-     * 流程定义查询
+     * 创建流程实例，同时使用businessKey字段关联系统业务表
      */
     @Test
-    void testProcessDefinitionQuery() {
-        // 1.获取流程引擎
+    void testProcessInstanceStartWithBusinessKey() {
+        // 1.获取ProcessEngine
         ProcessEngineConfiguration processEngineConfiguration = ProcessEngineConfiguration.createProcessEngineConfigurationFromResource("activiti.cfg.xml");
         ProcessEngine processEngine = processEngineConfiguration.buildProcessEngine();
 
-        // 2.获取RepositoryService：流程管理类
-        RepositoryService repositoryService = processEngine.getRepositoryService();
+        // 2.获取RuntimeService：流程运行管理类
+        RuntimeService runtimeService = processEngine.getRuntimeService();
 
-        // 3.获取ProcessDefinitionQuery：流程定义查询对象
-        ProcessDefinitionQuery processDefinitionQuery = repositoryService.createProcessDefinitionQuery();
+        // 3.创建、启动一个出差申请流程，并关联出差申请信息（通过出差申请表ID）
+        ProcessInstance processInstance = runtimeService.startProcessInstanceByKey("myEvection", "小王出差申请记录ID");
 
-        // 4.流程定义查询：支持多条件、排序等个性化定制
-        List<ProcessDefinition> myEvectionList = processDefinitionQuery
-                .processDefinitionKey("myEvection")
-                .orderByProcessDefinitionVersion().desc().list();
-
-        // 5.输出相关信息
-        for (ProcessDefinition processDefinition : myEvectionList) {
-            System.out.println(myEvectionList);
-        }
+        // 4.打印信息
+        System.out.println("流程定义ID：" + processInstance.getProcessDefinitionId());
+        System.out.println("流程定义Key：" + processInstance.getProcessDefinitionKey());
+        System.out.println("流程定义名称：" + processInstance.getProcessDefinitionName());
+        System.out.println("流程定义版本号：" + processInstance.getProcessDefinitionVersion());
+        System.out.println("流程实例ID：" + processInstance.getProcessInstanceId());
+        System.out.println("出差申请表ID：" + processInstance.getBusinessKey());
     }
 
     /**
-     * 流程定义删除
+     * 挂起所有流程实例/挂起整个流程
      */
     @Test
-    void testProcessDefinitionDelete() {
-        // 1.获取流程引擎
+    void testSuspendAllProcessInstance() {
+        // 1.获取ProcessEngine
         ProcessEngineConfiguration processEngineConfiguration = ProcessEngineConfiguration.createProcessEngineConfigurationFromResource("activiti.cfg.xml");
         ProcessEngine processEngine = processEngineConfiguration.buildProcessEngine();
 
-        // 2.获取RepositoryService：流程管理类
+        // 2.RepositoryService：流程资源管理类
         RepositoryService repositoryService = processEngine.getRepositoryService();
 
-        // 3.删除流程部署信息
-        try {
-            repositoryService.deleteDeployment("deploymentId");
-        } catch (Exception e) {
-            log.error(e.getMessage(), e);
-            // 如果某个流程存在未完成的流程实例，上述删除便无法成功完成，需要进行级联删除。
-            repositoryService.deleteDeployment("deploymentId", true);
-        }
-    }
-
-    /**
-     * 资源文件下载
-     * 方案1：使用Activiti提供的接口进行下载
-     */
-    @Test
-    void testProcessFileDownload1() throws IOException {
-        // 1.获取流程引擎
-        ProcessEngineConfiguration processEngineConfiguration = ProcessEngineConfiguration.createProcessEngineConfigurationFromResource("activiti.cfg.xml");
-        ProcessEngine processEngine = processEngineConfiguration.buildProcessEngine();
-
-        // 2.获取RepositoryService
-        RepositoryService repositoryService = processEngine.getRepositoryService();
-
-        // 3.获取资源文件
-        ProcessDefinition processDefinition = repositoryService.createProcessDefinitionQuery()
+        // 3.查询流程定义信息
+        ProcessDefinition processDefinition = repositoryService
+                .createProcessDefinitionQuery()
                 .processDefinitionKey("myEvection")
                 .singleResult();
 
-        // 流程部署ID、bpmn文件名、png文件名
-        String deploymentId = processDefinition.getDeploymentId();
-        String bpmnResourceName = processDefinition.getResourceName();
-        String pngResourceName = processDefinition.getDiagramResourceName();
-
-        // 指定文件对应的输入流
-        InputStream bpmnInputStream = repositoryService.getResourceAsStream(deploymentId, bpmnResourceName);
-        InputStream pngInputStream = repositoryService.getResourceAsStream(deploymentId, pngResourceName);
-
-        // 4.保存资源文件（需要导入common-io.jar）
-        File bpmnFile = new File("d:/evection.bpmn");
-        File pngFile = new File("d:/evection.png");
-        FileOutputStream bpmnOutputStream = new FileOutputStream(bpmnFile);
-        FileOutputStream pngOutputStream = new FileOutputStream(pngFile);
-        IOUtils.copy(bpmnInputStream, bpmnOutputStream);
-        IOUtils.copy(pngInputStream, pngOutputStream);
-
-        // 5.关闭流
-        bpmnOutputStream.close();
-        pngOutputStream.close();
-        bpmnInputStream.close();
-        pngInputStream.close();
+        // 4.挂起流程
+        if (processDefinition != null && !processDefinition.isSuspended()) {
+            repositoryService.suspendProcessDefinitionById(processDefinition.getId());
+        }
     }
 
     /**
-     * 历史信息查看
+     * 激化所有流程实例/激化整个流程
      */
     @Test
-    void testProcessHistory() {
-        // 1.获取流程引擎
+    void testActivateAllProcessInstance()  {
+        // 1.获取ProcessEngine
         ProcessEngineConfiguration processEngineConfiguration = ProcessEngineConfiguration.createProcessEngineConfigurationFromResource("activiti.cfg.xml");
         ProcessEngine processEngine = processEngineConfiguration.buildProcessEngine();
 
-        // 2.获取HistoryService：历史信息管理类
-        HistoryService historyService = processEngine.getHistoryService();
+        // 2.RepositoryService：流程资源管理类
+        RepositoryService repositoryService = processEngine.getRepositoryService();
 
-        // 3.创建相关查询对象
-        HistoricActivityInstanceQuery historicActivityInstanceQuery = historyService.createHistoricActivityInstanceQuery();
-        // HistoricDetailQuery historicDetailQuery = historyService.createHistoricDetailQuery();
-        // HistoricProcessInstanceQuery historicProcessInstanceQuery = historyService.createHistoricProcessInstanceQuery();
-        // HistoricTaskInstanceQuery historicTaskInstanceQuery = historyService.createHistoricTaskInstanceQuery();
-        // HistoricVariableInstanceQuery historicVariableInstanceQuery = historyService.createHistoricVariableInstanceQuery();
+        // 3.查询流程定义信息
+        ProcessDefinition processDefinition = repositoryService
+                .createProcessDefinitionQuery()
+                .processDefinitionKey("myEvection")
+                .singleResult();
 
-        // 4.查询相关数据
-        List<HistoricActivityInstance> historicActivityInstanceList = historicActivityInstanceQuery
-                .activityType("userTask")
-                .orderByHistoricActivityInstanceEndTime().desc()
-                .list();
+        // 4.激化流程
+        if (processDefinition != null && processDefinition.isSuspended()) {
+            repositoryService.activateProcessDefinitionById(processDefinition.getId());
+        }
+    }
+
+    /**
+     * 挂起单个流程实例
+     */
+    @Test
+    void testSuspendSingleProcessInstance() {
+        // 1.获取ProcessEngine
+        ProcessEngineConfiguration processEngineConfiguration = ProcessEngineConfiguration.createProcessEngineConfigurationFromResource("activiti.cfg.xml");
+        ProcessEngine processEngine = processEngineConfiguration.buildProcessEngine();
+
+        // 2.RuntimeService：流程运行管理
+        RuntimeService runtimeService = processEngine.getRuntimeService();
+
+        // 3.获取流程实例
+        ProcessInstance processInstance = runtimeService
+                .createProcessInstanceQuery()
+                // 随便查询一个未被挂起的实例
+                .active()
+                .singleResult();
+
+        // 4.挂起流程实例
+        if (processInstance != null) {
+            runtimeService.suspendProcessInstanceById(processInstance.getId());
+        }
+    }
+
+    /**
+     * 激活单个流程实例
+     */
+    @Test
+    void testActivateSingleProcessInstance() {
+        // 1.获取ProcessEngine
+        ProcessEngineConfiguration processEngineConfiguration = ProcessEngineConfiguration.createProcessEngineConfigurationFromResource("activiti.cfg.xml");
+        ProcessEngine processEngine = processEngineConfiguration.buildProcessEngine();
+
+        // 2.RuntimeService：流程运行管理
+        RuntimeService runtimeService = processEngine.getRuntimeService();
+
+        // 3.获取流程实例
+        ProcessInstance processInstance = runtimeService
+                .createProcessInstanceQuery()
+                // 随便查询一个被挂起的实例
+                .suspended()
+                .singleResult();
+
+        // 4.激活流程实例
+        if (processInstance != null) {
+            runtimeService.activateProcessInstanceById(processInstance.getId());
+        }
     }
 }

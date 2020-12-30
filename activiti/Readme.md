@@ -194,15 +194,23 @@ delete from ACT_RU_TASK where ID_ = ? and REV_ = ?
 
 ### 2.1 activiti 08
 
+1. Activiti表  ←关联→ 系统业务表
 
+    ![image-20201230163538369](markdown/Readme.assets/image-20201230163538369.png)
 
+    **借助ACT_RU_EXECUTION表中的business_key字段。**
 
+2. 流程挂起、激活
+
+    应用场景：某绩效考核系统，每月最后一天暂停处理出差申请，以进行数据统计。某个流程被挂起后，流程不可创建新的实例，未完成的流程实例也不可向下处理，直到流程被激活。
+
+3. 流程实例挂起、激活
 
 ---
 
 ## Activiti 相关信息  
 
-### 数据库表
+### 1. 数据库表
 
 ![img](markdown/README.assets/aHR0cHM6Ly91cGxvYWQtaW1hZ2VzLmppYW5zaHUuaW8vdXBsb2FkX2ltYWdlcy8xMDEzNTAyNS1mNzRjYzE0YzkzZWMzZTlhLnBuZz9pbWFnZU1vZ3IyL2F1dG8tb3JpZW50L3N0cmlwJTdDaW1hZ2VWaWV3Mi8yL3cvNTA1L2Zvcm1hdC93ZWJw)
 
@@ -216,7 +224,7 @@ activiti数据库表大体分为5类：
 4. act_re_ 流程存储表，re是repository的缩写，对应RepositoryService接口，存储流程部署和流程定义等静态数据
 5. act_ru_ 运行时数据表，ru是runtime的缩写，对应RuntimeService接口和TaskService接口，存储流程实例和用户任务等动态数据
 
-### BPMN符号
+### 2. BPMN符号
 
 #### 事件 Event
 
@@ -239,3 +247,6 @@ activiti数据库表大体分为5类：
 流向即两个流程节点间的连线，常见的流向有：
 
 ![image-20201222225732641](markdown/README.assets/image-20201222225732641.png)
+
+### 3.流程实例
+
