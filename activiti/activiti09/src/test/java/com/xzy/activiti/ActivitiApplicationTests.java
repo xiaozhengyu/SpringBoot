@@ -162,7 +162,7 @@ class ActivitiApplicationTests {
     }
 
     /**
-     * 创建流程实例，同时使用businessKey字段关联系统业务表给i他
+     * 创建流程实例，同时使用businessKey字段关联系统业务表
      */
     @Test
     void testProcessInstanceStartWithBusinessKey() {

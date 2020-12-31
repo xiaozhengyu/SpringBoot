@@ -208,7 +208,7 @@ delete from ACT_RU_TASK where ID_ = ? and REV_ = ?
 
 ### 2.2 activiti 09 
 
-设置任务负责人的3种方式：
+设置<font color = red>**任务负责人**</font>的3种方式：
 
 - 固定分配：直接在bpmn文件中写死任务负责人，之前的工程使用的都是这种方式。
 - 表达式分配
@@ -217,6 +217,12 @@ delete from ACT_RU_TASK where ID_ = ? and REV_ = ?
     - UEL-value 与 UEL-method 结合
     - 其他
 - 监听器分配 √
+
+### 2.3 activiti 10 
+
+<font color = red>**流程变量**</font>的使用
+
+
 
 ---
 
@@ -261,4 +267,47 @@ activiti数据库表大体分为5类：
 ![image-20201222225732641](markdown/README.assets/image-20201222225732641.png)
 
 ### 3.流程实例
+
+```mermaid
+graph LR
+cls[学生类]
+ins1[张三]
+ins2[李四]
+ins3[王五]
+
+cls-->ins1
+cls-->ins2
+cls-->ins3
+
+pro[请假流程]
+ins4[张三请假单]
+ins5[李四请假单]
+ins6[王五请假单]
+
+pro-->ins4
+pro-->ins5
+pro-->ins6
+```
+
+类比Java中类与对象的关系，流程定义与流程实例同样是1对n的关系。
+
+### 4.流程变量
+
+流程变量是Activiti中非常重要的一个角色，通过使用流程变量可以灵活的控制流程的走向。以下面的出差申请流程为例，出差天数就是一个控制流程走向的流程变量：
+
+```mermaid
+graph TB
+StartEvent((Start))
+EndEvent((End))
+userTask1[创建出差申请]
+userTask2[部门经理审批]
+userTask3[总经理审批]
+userTask4[财务审批]
+
+StartEvent-->userTask1-->userTask2--出差天数>3-->userTask3-->userTask4-->EndEvent
+userTask2--出差天数<=3-->userTask4
+
+```
+
+
 
