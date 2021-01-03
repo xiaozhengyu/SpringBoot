@@ -220,7 +220,7 @@ delete from ACT_RU_TASK where ID_ = ? and REV_ = ?
 
 ### 2.3 activiti 10 
 
-<font color = red>**流程变量**</font>的使用：
+<font color = red>**流程变量**</font>的使用（包含全局变量和局部变量）：
 
 1. 在属性上使用UEL表达式（未作演示）
 2. 在连线上使用UEL表达式

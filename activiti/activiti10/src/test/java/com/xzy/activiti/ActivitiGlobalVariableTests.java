@@ -17,12 +17,12 @@ import java.util.*;
 /**
  * @author xzy
  * @date 2021/1/3 17:57
- * 说明：Activiti流程变量
+ * 说明：Activiti流程变量（全局变量）
  */
 @SpringBootTest
 @RunWith(SpringRunner.class)
 @Log4j2
-class ActivitiVariableTests {
+class ActivitiGlobalVariableTests {
 
     /**
      * 流程部署
