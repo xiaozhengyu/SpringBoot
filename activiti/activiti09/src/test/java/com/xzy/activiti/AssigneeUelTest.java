@@ -65,7 +65,7 @@ class AssigneeUelTest {
         RuntimeService runtimeService = processEngine.getRuntimeService();
 
         // 3.根据定义流程时指定的key，创建流程实例（启动流程）,同时指定各个任务的负责人
-        Map<String, Object> assigneeMap = new HashMap<>(3);
+        Map<String, Object> assigneeMap = new HashMap<>(4);
         assigneeMap.put("assignee0", "张三");
         assigneeMap.put("assignee1", "李经理");
         assigneeMap.put("assignee2", "王总经理");

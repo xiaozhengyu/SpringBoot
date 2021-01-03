@@ -213,16 +213,23 @@ delete from ACT_RU_TASK where ID_ = ? and REV_ = ?
 - 固定分配：直接在bpmn文件中写死任务负责人，之前的工程使用的都是这种方式。
 - 表达式分配
     - UEL-value √
-    - UEL-method
-    - UEL-value 与 UEL-method 结合
-    - 其他
+    - UEL-method（未作演示）
+    - UEL-value 与 UEL-method 结合（未作演示）
+    - 其他（未作演示）
 - 监听器分配 √
 
 ### 2.3 activiti 10 
 
-<font color = red>**流程变量**</font>的使用
+<font color = red>**流程变量**</font>的使用：
 
-
+1. 在属性上使用UEL表达式（未作演示）
+2. 在连线上使用UEL表达式
+    - UEL-value（未作演示）
+    - UEL-method √
+        - 启动流程（创建流程实例）时设置
+        - 任务完成时设置
+        - 通过流程实例设置（只能是尚未完成的流程）
+        - 通过任务实例设置（只能是尚未完成的任务）
 
 ---
 
