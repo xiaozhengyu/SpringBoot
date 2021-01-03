@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+                           http://www.springframework.org/schema/beans/spring-beans.xsd
+                           http://www.springframework.org/schema/context
+                           http://www.springframework.org/schema/context/spring-context.xsd
+                           http://www.springframework.org/schema/tx
+                           http://www.springframework.org/schema/tx/spring-tx.xsd">
+
+    <!--连接池-->
+    <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource">
+        <!--数据库配置：数据库驱动、数据库连接、用户名、密码-->
+        <property name="url" value="jdbc:mysql://127.0.0.1:3306/activiti?serverTimezone=Asia/Shanghai"/>
+        <property name="username" value="root"/>
+        <property name="password" value="123ABC,"/>
+
+        <!--连接池配置-->
+        <property name="maxActive" value="3"/>
+        <property name="maxIdle" value="1"/>
+    </bean>
+
+    <!--ProcessEngineConfiguration-->
+    <bean id="processEngineConfiguration" class="org.activiti.engine.impl.cfg.StandaloneProcessEngineConfiguration">
+        <!--连接池-->
+        <property name="dataSource" ref="dataSource"/>
+
+        <!--activiti数据库表在生成时的策略
+                 flase：默认值。activiti在启动时，会对比数据库表中保存的版本，如果没有表或者版本不匹配，将抛出异常。（生产环境常用）
+                 true：activiti会对数据库中所有表进行更新操作。如果表不存在，则自动创建。（开发时常用）
+                 create_drop：在activiti启动时创建表，在关闭时删除表（必须手动关闭引擎，才能删除表）。（单元测试常用）
+                 drop-create：在activiti启动时删除原来的旧表，然后在创建新表（不需要手动关闭引擎）。
+        -->
+        <property name="databaseSchemaUpdate" value="true"/>
+    </bean>
+
+</beans>
