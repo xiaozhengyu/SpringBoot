@@ -1,5 +1,6 @@
 package com.xzy.mvc.controller;
 
+import com.xzy.mvc.dto.QueryConditionsDTO;
 import com.xzy.mvc.util.Message;
 import com.xzy.mvc.util.MessageBox;
 import org.springframework.web.bind.annotation.*;
@@ -42,8 +43,19 @@ public class TestController {
      * @param param - 参数
      * @return -
      */
-    @PostMapping("post_test")
+    @PostMapping("post_test1")
     public Message postTest(@RequestBody Map<String, Object> param) {
         return MessageBox.ok(param);
+    }
+
+    /**
+     * post请求处理测试
+     *
+     * @param qc - query conditions
+     * @return - query conditions
+     */
+    @PostMapping("post_test2")
+    public Message postTest(@RequestBody QueryConditionsDTO qc) {
+        return MessageBox.ok(qc);
     }
 }

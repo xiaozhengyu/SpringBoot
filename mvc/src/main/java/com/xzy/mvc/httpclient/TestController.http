@@ -5,7 +5,7 @@ GET http://{{url}}/test/get_test1
 GET http://{{url}}/test/get_test2?paramStr=hello
 
 ### 测试 /test/post_test
-POST http://{{url}}/test/post_test
+POST http://{{url}}/test/post_test1
 Content-Type: application/json
 
 {
@@ -14,3 +14,14 @@ Content-Type: application/json
   "paramDouble": 1.0
 }
 
+### 测试 /test/post_test2
+POST http://{{url}}/test/post_test2
+Content-Type: application/json
+
+{
+  "strPar": "str",
+  "intPar": 0,
+  "datePar": 1609743896044,
+  "pageNumber": 0,
+  "pageSize": 10
+}
