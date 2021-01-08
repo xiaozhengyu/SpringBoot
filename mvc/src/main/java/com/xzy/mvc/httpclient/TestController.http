@@ -22,6 +22,16 @@ Content-Type: application/json
   "strPar": "str",
   "intPar": 0,
   "datePar": 1609743896044,
-  "pageNumber": 0,
-  "pageSize": 10
+  "pageNumber": null,
+  "pageSize": null
+}
+
+### 测试 /test/post_test2
+POST http://{{url}}/test/post_test2
+Content-Type: application/json
+
+{
+  "strPar": "str",
+  "intPar": 0,
+  "datePar": 1609743896044
 }

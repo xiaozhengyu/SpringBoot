@@ -1,5 +1,6 @@
 package com.xzy.mvc.dto;
 
+import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
@@ -11,8 +12,8 @@ import java.util.Date;
  * @date 2021-01-04 14:46
  * 说明：
  */
-@ToString
 @Getter
+@ToString
 public class QueryConditionsDTO {
     private String strPar;
     private Integer intPar;
@@ -21,7 +22,12 @@ public class QueryConditionsDTO {
     private Integer pageSize;
 
     public QueryConditionsDTO() {
-        System.out.println("QueryConditionsDTO()");
+        System.out.println("NoArgumentConstructor");
+        this.strPar = "str";
+        this.intPar = 0;
+        this.datePar = new Date();
+        this.pageNumber = 0;
+        this.pageSize = 10;
     }
 
     public QueryConditionsDTO(String strPar, Integer intPar, Date datePar, Integer pageNumber, Integer pageSize) {
@@ -50,11 +56,11 @@ public class QueryConditionsDTO {
 
     public void setPageNumber(Integer pageNumber) {
         System.out.println("setPageNumber(Integer pageNumber)");
-        this.pageNumber = pageNumber;
+        this.pageNumber = (pageNumber != null && pageNumber >= 0) ? pageNumber : 0;
     }
 
     public void setPageSize(Integer pageSize) {
         System.out.println("setPageSize(Integer pageSize)");
-        this.pageSize = pageSize;
+        this.pageSize = (pageSize != null && pageSize > 0) ? pageSize : 10;
     }
 }
