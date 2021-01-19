@@ -1,5 +1,6 @@
 package com.xzy.mvc.controller;
 
+import com.xzy.mvc.dto.FormDataDTO;
 import com.xzy.mvc.dto.QueryConditionsDTO;
 import com.xzy.mvc.util.Message;
 import com.xzy.mvc.util.MessageBox;
@@ -57,5 +58,10 @@ public class TestController {
     @PostMapping("post_test2")
     public Message postTest(@RequestBody QueryConditionsDTO qc) {
         return MessageBox.ok(qc);
+    }
+
+    @PostMapping("form_test")
+    public Message formDateTest1(FormDataDTO fd) {
+        return MessageBox.ok(fd);
     }
 }
