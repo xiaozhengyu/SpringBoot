@@ -1,0 +1,6 @@
+spring:
+  mail:
+    host: xxx.xxx.xxx.xxx
+    port: 25
+    username: xxxxxxxx
+    password: xxxxxxxx
