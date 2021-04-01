@@ -1,0 +1,12 @@
+
+I
+java:S1128".Remove this unused import 'java.util.HashMap'.(™˜”€ùÿÿÿÿ
+E
+java:S1128"*Remove this unused import 'java.util.Map'.(¼è½Òşÿÿÿÿ
+N	java:S1061"9Replace this use of System.out or System.err by a logger.(¹­È…
+S	java:S1062"9Replace this use of System.out or System.err by a logger.(ò‚ÑËüÿÿÿÿ
+S	java:S106G"9Replace this use of System.out or System.err by a logger.(¡Û»üúÿÿÿÿ
+S	java:S106H"9Replace this use of System.out or System.err by a logger.(õà•Ãşÿÿÿÿ
+S	java:S106I"9Replace this use of System.out or System.err by a logger.(µƒÑ®ÿÿÿÿÿ
+S	java:S106J"9Replace this use of System.out or System.err by a logger.(¹ÎÎÑúÿÿÿÿ
+N	java:S106K"9Replace this use of System.out or System.err by a logger.(íãº
